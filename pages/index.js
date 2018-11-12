@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Layout from '../components/MyLayout.js'
-import fetch from 'isomorphic-unfetch'
+import {get} from '../lib/request'
 
 const PostLink = (props) => (
     <li>
@@ -14,21 +14,20 @@ const Index = (props) => (
     <Layout>
         <h1>Food Delivery</h1>
         <ul>
-            {props.shows.map(({show}) => (
-                <PostLink key={show.id} id={show.id} name={show.name}></PostLink>
+            {props.restaurants.map((restaurant) => (
+                <PostLink key={restaurant.restaurant_id} id={restaurant.restaurant_id} name={restaurant.name}></PostLink>
             ))}
         </ul>
     </Layout>
 )
 
 Index.getInitialProps = async function() {
-    const res = await fetch('ENDPOINT')
-    const data = await res.json()
+    const {data} = await get('/restaurants/list')
   
     console.log(`Data fetched. Count: ${data.length}`)
-  
+
     return {
-      shows: data
+        restaurants: data
     }
   }
 
