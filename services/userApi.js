@@ -7,36 +7,16 @@ export const createUser = async (
   phone
 ) => {
   try {
-    const response = await post("/users/register", {
+    const {data}  = await post("/users/register", {
         name,
         email,
         password,
         phone
     });
-    return response;
+    return data;
   } catch (error) {
-    return error.response && error.response.status === 409
-      ? "Email is already taken."
-      : "Unknown error. Please try again";
-  }
-};
-
-export const getUsers = () => {
-  return getData("/users", null);
-};
-
-export const getUser = (jwt, id) => {
-  return getData(`/users/${id}`, jwt);
-};
-
-export const getCurrentUser = jwt => {
-  return getData("/users/current", jwt);
-};
-
-const getData = (endpoint, jwt) => {
-  try {
-    return get(endpoint, jwt);
-  } catch (error) {
-    return error;
+    if (error.response.status == 409)
+        return {auth: false, error: "User with the same email already exists."}
+    return {auth: false, error: error.toString()}
   }
 };

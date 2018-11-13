@@ -1,17 +1,18 @@
 import Link from 'next/link'
 import Layout from '../components/MyLayout.js'
-import {get} from '../lib/request'
+import { get } from '../lib/request'
+import { isAuthenticated } from '../lib/auth'
 
 const PostLink = (props) => (
     <li>
-        <Link as={`/p/${props.id}`} href={`/post?id=${props.id}`}>
+        <Link as={`/restaurant/${props.id}`} href={`/restaurant?id=${props.id}&name=${props.name}`}>
             <a>{props.name}</a>
         </Link>
     </li>
 )
 
 const Index = (props) => (
-    <Layout>
+    <Layout auth={props.auth}>
         <h1>Food Delivery</h1>
         <ul>
             {props.restaurants.map((restaurant) => (
@@ -21,13 +22,14 @@ const Index = (props) => (
     </Layout>
 )
 
-Index.getInitialProps = async function() {
+Index.getInitialProps = async function(context) {
     const {data} = await get('/restaurants/list')
-  
+
     console.log(`Data fetched. Count: ${data.length}`)
 
     return {
-        restaurants: data
+        restaurants: data,
+        auth: isAuthenticated(context)
     }
   }
 

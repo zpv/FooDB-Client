@@ -12,8 +12,12 @@
     "react-dom": "^16.5.2"
   },
   "scripts": {
-    "dev": "node server.js",
+    "dev": "node start.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node start.js"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0"
   }
 }

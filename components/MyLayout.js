@@ -8,7 +8,7 @@ const layoutStyle = {
 
 const Layout = (props) => (
   <div style={layoutStyle}>
-    <Header />
+    <Header auth={props.auth}/>
     {props.children}
   </div>
 )

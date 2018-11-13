@@ -1,5 +1,6 @@
 const express = require('express')
 const next = require('next')
+const { get } = require('./lib/request')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -9,9 +10,13 @@ app.prepare()
     .then(() => {
         const server = express()
         
-        server.get('/p/:id', (req, res) => {
-            const actualPage = '/post'
-            const queryParams = {id: req.params.id}
+        server.get('/restaurant/:id', async (req, res) => {
+            const actualPage = '/restaurant'
+            const { id } = req.params
+            const { data } = await get(`/restaurants/${id}`)
+            const name = data.name
+
+            const queryParams = {id, name}
             app.render(req, res, actualPage, queryParams)
         })
 
