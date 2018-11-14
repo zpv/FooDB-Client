@@ -18,26 +18,36 @@ str.toString().toLowerCase()
     .replace(/-+$/, '')            // Trim - from end of text
 )
 
-const Content = (props) => (
-    <Card>
-    <Card.Content>
-        <Card.Header>{props.food.name}</Card.Header>
-        <Card.Meta>{props.food.price}</Card.Meta>
-        <Card.Description>
-        {props.food.description}
-        </Card.Description>
-        {/* <style jsx>{`
-            div {
-                margin-bottom: 5px;
-            }
-        `}
-            
-        </style> */}
-    </Card.Content>
-    </Card>
-)
 
-const Restaurant = (props) => (
+
+
+
+const Restaurant = (props) =>  {
+    let cart;
+    const addToCart = (e, {name, price}) => {
+        console.log(name, price)
+        cart.addItem({name, price})
+    }
+    const Content = (props) => (
+        <Card name={props.food.name} price={props.food.price} onClick={addToCart}>
+        <Card.Content>
+            <Card.Header>{props.food.name}</Card.Header>
+            <Card.Meta>{props.food.price}</Card.Meta>
+            <Card.Description>
+            {props.food.description}
+            </Card.Description>
+            {/* <style jsx>{`
+                div {
+                    margin-bottom: 5px;
+                }
+            `}
+                
+            </style> */}
+        </Card.Content>
+        </Card>
+    )
+    return (
+  
     <Layout auth={props.auth}>
     <h1>Menu</h1>
     <Grid stackable columns={2} divided>
@@ -67,11 +77,11 @@ const Restaurant = (props) => (
             </Card.Content>
         </Card>
 
-        <Cart></Cart>
+        <Cart ref={instance => cart = instance}></Cart>
         </Grid.Column>
         </Grid>
     </Layout>
-)
+)}
 
 Restaurant.getInitialProps = async function (context) {
     const { id, name } = context.query

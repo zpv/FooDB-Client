@@ -10,8 +10,25 @@ const Item = (props) => (
 export default class Cart extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {items: [], count: 0, total: 0}
   }
+
+  addItem(item) {
+    item.key = this.state.count
+
+    let items = [...this.state.items];
+    items.push(item);
+
+    let total = 0
+    for (item of items) {
+      total += parseFloat(item.price)
+    }
+
+    this.setState({total: total.toFixed(2)})
+
+    this.setState({ items });
+    this.setState((state)=>({count: state.count + 1}))
+    }
 
   render() {
     return (<>
@@ -21,15 +38,17 @@ export default class Cart extends Component {
             Your Cart
           </Card.Header>
           <Divider />
-          <Item name='Item1' price='2.50'></Item>
-          <Divider />
-          <Item name='Item2' price='2.50'></Item>
-          <Divider />
+          {this.state.items.map(menuItem => (
+            <div key={menuItem.key}>
+            <Item  name={menuItem.name} price={menuItem.price}></Item>
+            <Divider/>
+            </div>
+          ))}
           <div style={{display: 'flex'}}>
           <Button>
           Checkout
          </Button>
-          <span style={{width: '100%', textAlign: 'right', alignSelf: 'center'}}>Subtotal: $3.75</span>
+          <span style={{width: '100%', textAlign: 'right', alignSelf: 'center'}}>Subtotal: ${this.state.total}</span>
           </div>
         </Card.Content>
 
