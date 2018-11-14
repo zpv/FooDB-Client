@@ -1,5 +1,6 @@
 import Layout from '../components/MyLayout.js'
 import Link from 'next/link'
+import Cart from '../components/Cart'
 import { get } from '../lib/request'
 import { isAuthenticated } from '../lib/auth'
 import { Grid, Card, Icon } from 'semantic-ui-react'
@@ -65,6 +66,8 @@ const Restaurant = (props) => (
                 </Link>
             </Card.Content>
         </Card>
+
+        <Cart></Cart>
         </Grid.Column>
         </Grid>
     </Layout>

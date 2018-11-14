@@ -8,21 +8,19 @@ const restaurantInfoCardStyle = {
 }
 
 const Content = (props) => (
-    <Card>
+    <Card fluid>
     <Card.Content>
-        <Card.Header>{props.food.name}</Card.Header>
-        <Card.Meta>{props.food.price}</Card.Meta>
+        <Card.Header>{props.review.title}</Card.Header>
+        <Card.Meta>{props.review.stars} <Icon name="star"/></Card.Meta>
         <Card.Description>
-        {props.food.description}
+        {props.review.content}
         </Card.Description>
-        {/* <style jsx>{`
-            div {
-                margin-bottom: 5px;
-            }
-        `}
-            
-        </style> */}
-    </Card.Content>
+        </Card.Content>
+        <Card.Content extra>
+                <Icon name='user' />
+                Temp
+          </Card.Content>
+
     </Card>
 )
 
@@ -33,28 +31,13 @@ const RestaurantReviews = (props) => (
         <Grid.Column width={12}>
         
         <Card.Group>
-        {props.data.map(menuItem => (
-            <Content key={menuItem.name} food={menuItem}/>
+        {props.data.map(review => (
+            <Content key={review.review_id} review={review}/>
         ))}
         </Card.Group>
         
         </Grid.Column>
         <Grid.Column floated="right" width={4}>
-        <Card style={restaurantInfoCardStyle}>
-            <Card.Content>
-            <Card.Header>{props.name}</Card.Header>
-            <Card.Meta>
-                <span className='date'>Test Placeholder</span>
-            </Card.Meta>
-            <Card.Description>Lorem ipsum</Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-            <a>
-                <Icon name='user' />
-                22 Reviews
-            </a>
-            </Card.Content>
-        </Card>
         </Grid.Column>
         </Grid>
     </Layout>
@@ -62,7 +45,7 @@ const RestaurantReviews = (props) => (
 
 RestaurantReviews.getInitialProps = async function (context) {
     const { id, name } = context.query
-    const {data} = await get(`/restaurants/${id}/menu-items`)
+    const {data} = await get(`/restaurants/${id}/reviews`)
     const auth = isAuthenticated(context);
 
     return { data, name, auth }
