@@ -1,7 +1,8 @@
 import { Component } from 'react'
 import { signUp } from '../../lib/auth'
+import { Form, Button, Message } from 'semantic-ui-react'
+
 import Layout from '../../components/MyLayout.js'
-import Error from '../../components/Error.js'
 
 class Register extends Component {
     constructor(props) {
@@ -40,42 +41,37 @@ class Register extends Component {
         return (
             <Layout>
                 <h1>Register for An Account</h1>
-                {this.state.error && <Error message={this.state.error} />}
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" placeholder="name" name="name" />
-                    <input type="email" placeholder="email" name="email" />
-                    <input type="tel" placeholder="phone (no dashes)" name="phone" pattern="^\d{10}$"/>
-                    <input type="password" placeholder="password" name="password" />
+                {this.state.error && <Message negative>
+                    <Message.Header>An error has occurred.</Message.Header>
+                    <p>{this.state.error}</p>
+                </Message>}
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Field>
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Name" name="name" />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Email</label>
+                    <input type="email" placeholder="Email" name="email" />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Phone Number</label>
+                    <input type="tel" placeholder="Phone Number" name="phone" pattern="^\d{10}$"/>
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Password</label>
+                    <input type="password" placeholder="Password" name="password" />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Confirm Password</label>
                     <input
                         type="password"
-                        placeholder="confirm password"
+                        placeholder="Confirm Password"
                         name="password_confirmation"
-                    />
-                    <span>{`Password, 8 characters min`}</span>
-                    <button type="submit">Submit</button>
-                    <style jsx>{`
-                        form {
-                            padding-bottom: 20px;
-                            margin-bottom: 20px;
-                            text-align: center;
-                        }
-                        h1 {
-                            font-size: 20px;
-                        }
-                        span {
-                            font-size: 10px;
-                            color: red;
-                        }
-                        input,
-                            button {
-                            display: block;
-                            margin: auto;
-                            margin-top: 5px;
-                            margin-bottom: 5px;
-                        }
-                  `}
-                    </style>
-                </form>
+                    />                    </Form.Field>
+                    
+                    <Button type="submit">Submit</Button>
+                </Form>
             </Layout>
         )
     }

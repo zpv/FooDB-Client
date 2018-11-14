@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { signIn } from '../../lib/auth'
 import Layout from '../../components/MyLayout.js'
-import Error from '../../components/Error.js'
+import { Form, Button, Message } from 'semantic-ui-react'
 
 class SignIn extends Component {
     constructor(props) {
@@ -33,34 +33,23 @@ class SignIn extends Component {
         return (
             <Layout>
                 <h1>Sign in</h1>
-                {this.state.error && <Error message={this.state.error} />}
-                <form onSubmit={this.handleSubmit}>
-                    <input type="email" placeholder="email" name="email" />
-                    <input type="password" placeholder="password" name="password" />
-                    <button type="submit">Submit</button>
-                    <style jsx>{`
-                        form {
-                            padding-bottom: 20px;
-                            margin-bottom: 20px;
-                            text-align: center;
-                        }
-                        h1 {
-                            font-size: 20px;
-                        }
-                        span {
-                            font-size: 10px;
-                            color: red;
-                        }
-                        input,
-                            button {
-                            display: block;
-                            margin: auto;
-                            margin-top: 5px;
-                            margin-bottom: 5px;
-                        }
-                  `}
-                    </style>
-                </form>
+                {this.state.error && <Message negative>
+                    <Message.Header>An error has occurred.</Message.Header>
+                    <p>{this.state.error}</p>
+                </Message>}
+                <Form onSubmit={this.handleSubmit}>
+
+                    <Form.Field>
+                        <label>Email</label>
+                        <input type="email" placeholder="Email" name="email" />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Password</label>
+                        <input type="password" placeholder="Password" name="password" />
+                    </Form.Field>
+                    <Button type="submit">Submit</Button>
+
+                </Form>
             </Layout>
         )
     }

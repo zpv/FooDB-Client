@@ -1,39 +1,59 @@
 import Link from 'next/link'
 import {signOut} from '../lib/auth'
+import React, { Component } from 'react'
+import 'semantic-ui-css/semantic.min.css';
 
-const linkStyle = {
-    marginRight: 15
+import { Menu } from 'semantic-ui-react'
+
+const fooDBStyle = {
+    marginLeft: '8px'
 }
 
-const logout = () => {
-    signOut()
+const logoStyle = {
+    width: '25px'
 }
 
-const Header = (props) => {
+export default class Header extends Component {
+  render() {
+
     return (
-        <div>
-            <Link href="/">
-                <a style={linkStyle}>Home</a>
-            </Link>
-            {props.auth ?
+      <Menu stackable>
+        <Menu.Item>
+          <img style={logoStyle} src='https://react.semantic-ui.com/logo.png' /> <span style={fooDBStyle}><b>FooDB</b></span>
+        </Menu.Item>
+        <Link href="/">
+        <Menu.Item
+          name='home'
+        >
+          Home
+        </Menu.Item>
+        </Link>
+        {this.props.auth ?
             <>
             <Link href="/user">
-                <a style={linkStyle}>Profile</a>
+            <Menu.Item
+                name='profile'
+            >Profile</Menu.Item>
             </Link>
-            <a href="#" style={linkStyle} onClick={logout}>Sign out</a>
-            </>
-            :
+            <Menu.Item
+                name='sign-out'
+                onClick={signOut}
+            >Sign out</Menu.Item>
+            </> : 
             <>
             <Link href="/user/signin">
-                <a style={linkStyle}>Sign in</a>
-            </Link>    
+            <Menu.Item
+                name='sign-in'
+            >Sign in</Menu.Item>
+            </Link>
             <Link href="/user/register">
-                <a style={linkStyle}>Register</a>
-            </Link>    
+            <Menu.Item
+                name='register'
+            >Register</Menu.Item>
+            </Link>
             </>
-            }
-        </div>
+        }
+      </Menu>
     )
+  }
 }
-
-export default Header
