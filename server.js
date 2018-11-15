@@ -10,7 +10,15 @@ app.prepare()
     .then(() => {
         const server = express()
 
-        server.get(['/restaurant/:seo?/:id/reviews'], async (req, res) => {
+        server.get('/order/:id', async (req, res) => {
+            const actualPage = '/order'
+            const { id } = req.params
+
+            const queryParams = {id}
+            app.render(req, res, actualPage, queryParams)
+        })
+
+        server.get('/restaurant/:seo?/:id/reviews', async (req, res) => {
             const actualPage = '/restaurant-reviews'
             const { id } = req.params
             const { data } = await get(`/restaurants/${id}`)
@@ -20,7 +28,7 @@ app.prepare()
             app.render(req, res, actualPage, queryParams)
         })
         
-        server.get(['/restaurant/:seo?/:id/'], async (req, res) => {
+        server.get('/restaurant/:seo?/:id/', async (req, res) => {
             const actualPage = '/restaurant'
             const { id } = req.params
             const { data } = await get(`/restaurants/${id}`)
