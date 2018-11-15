@@ -5,10 +5,6 @@ import { get } from '../lib/request'
 import { isAuthenticated } from '../lib/auth'
 import { Grid, Card, Icon } from 'semantic-ui-react'
 
-const restaurantInfoCardStyle = {
-    margin: '0 auto'
-}
-
 const slugify = (str) => (
 str.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
@@ -50,10 +46,10 @@ const Restaurant = (props) =>  {
   
     <Layout auth={props.auth}>
     <h1>Menu</h1>
-    <Grid stackable columns={2} divided>
+    <Grid stackable doubling columns={2} divided>
         <Grid.Column width={12}>
         
-        <Card.Group>
+        <Card.Group stackable>
         {props.data.map(menuItem => (
             <Content key={menuItem.name} food={menuItem}/>
         ))}
@@ -61,7 +57,9 @@ const Restaurant = (props) =>  {
         
         </Grid.Column>
         <Grid.Column floated="right" width={4}>
-        <Card style={restaurantInfoCardStyle}>
+        {/* <Card.Group doubling stackable> */}
+        <Card.Group stackable>
+        <Card>
             <Card.Content>
             <Card.Header>{props.name}</Card.Header>
             <Card.Meta>
@@ -76,8 +74,11 @@ const Restaurant = (props) =>  {
                 </Link>
             </Card.Content>
         </Card>
-
-        <Cart ref={instance => cart = instance}></Cart>
+        </Card.Group>
+        <Card.Group stackable>
+        <Cart ref={instance => cart = instance} restaurantId={props.id}></Cart>
+        </Card.Group>  
+        {/* </Card.Group> */}
         </Grid.Column>
         </Grid>
     </Layout>

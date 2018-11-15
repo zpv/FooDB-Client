@@ -13,7 +13,7 @@ const Index = (props) => (
 )
 
 Index.getInitialProps = async function (context) {
-    if (!redirectUnauthenticated(context, '/user/register')) {
+    if (redirectUnauthenticated('/user/register', context)) {
         return {}
     }
 
