@@ -1,10 +1,13 @@
 import Layout from '../../components/MyLayout.js'
 import { get } from '../../lib/request'
+import Link from 'next/link'
+
 import redirect from '../../lib/redirect'
 import { getJwt, isAuthenticated, redirectUnauthenticated } from '../../lib/auth'
 import { Divider, Card } from 'semantic-ui-react';
 
 const Order = (props) => (
+    <Link href={'/order?id=' + props.order.order_id} as={'/order/' + props.order.order_id}>
     <Card fluid>
     <Card.Content>
         <Card.Header>Order #{props.order.order_id}</Card.Header>
@@ -21,6 +24,7 @@ const Order = (props) => (
         </style> */}
     </Card.Content>
     </Card>
+    </Link>
 )
 
 const Index = (props) => (
