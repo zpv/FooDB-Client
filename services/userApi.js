@@ -4,14 +4,16 @@ export const createUser = async (
   name,
   email,
   password,
-  phone
+  phone,
+  address
 ) => {
   try {
     const {data}  = await post("/users/register", {
         name,
         email,
         password,
-        phone
+        phone,
+        address
     });
     return data;
   } catch (error) {

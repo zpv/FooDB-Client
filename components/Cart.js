@@ -42,7 +42,7 @@ export default class Cart extends Component {
     const {order_id} = await createOrder(this.props.restaurantId, this.state.items, getJwt()) 
 
     if (order_id) {
-      Router.push(`/order/${order_id}`)
+      Router.push(`/order?id=${order_id}`, `/order/${order_id}`)
     }
   }
 

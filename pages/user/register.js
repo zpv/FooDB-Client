@@ -17,10 +17,10 @@ class Register extends Component {
         const name = event.target.elements.name.value
         const email = event.target.elements.email.value
         const phone = event.target.elements.phone.value;
+        const address = event.target.elements.address.value;
         const password = event.target.elements.password.value;
         const password_confirmation = event.target.elements.password_confirmation.value;
-
-        if (!name || !email || !phone || !password) {
+        if (!name || !email || !phone || !password || !address) {
             this.setState({
                 error: "Please complete all the fields."
             });
@@ -29,7 +29,7 @@ class Register extends Component {
                 error: "Passwords do not match."
             });
         } else {
-            const error = await signUp(name, email, password, phone)
+            const error = await signUp(name, email, password, phone, address)
             if (error) {
                 this.setState({
                     error
@@ -57,6 +57,10 @@ class Register extends Component {
                     <Form.Field>
                     <label>Phone Number</label>
                     <input type="tel" placeholder="Phone Number" name="phone" pattern="^\d{10}$"/>
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Address</label>
+                    <input type="text" placeholder="Address" name="address"/>
                     </Form.Field>
                     <Form.Field>
                     <label>Password</label>
