@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Router from 'next/router'
 import { Card, Divider, Button } from 'semantic-ui-react'
 import { getJwt, isAuthenticated, redirectUnauthenticated } from '../lib/auth'
 import { createOrder } from '../services/orderApi'
@@ -38,8 +39,11 @@ export default class Cart extends Component {
     if (redirectUnauthenticated('/user/register')) {
       return false
     }
-    const data = await createOrder(this.props.restaurantId, this.state.items, getJwt()) 
-    console.log(data)
+    const {order_id} = await createOrder(this.props.restaurantId, this.state.items, getJwt()) 
+
+    if (order_id) {
+      Router.push(`/order/${order_id}`)
+    }
   }
 
   render() {
