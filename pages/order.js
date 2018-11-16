@@ -1,11 +1,9 @@
 import Layout from '../components/MyLayout.js'
 import { get } from '../lib/request'
 import { isAuthenticated, getJwt } from '../lib/auth'
-import { Grid, Card, Icon, Divider } from 'semantic-ui-react'
-
-const restaurantInfoCardStyle = {
-    margin: '0 auto'
-}
+import { Grid, Card, Icon, Divider, Header } from 'semantic-ui-react'
+import { getStatus } from '../services/orderApi'
+import Maps from '../components/MapContainer'
 
 const Item = (props) => (
   <span>
@@ -32,7 +30,8 @@ const Content = (props) => (
 
 const Order = (props) => (
     <Layout auth={props.auth}>
-    <h1>Order #{props.order.order_id} Details</h1>
+    <Header as='h1' icon='food' content={`Order #${props.order.order_id} – ${props.order.name}`} />
+  
     <Grid stackable columns={2} divided>
         <Grid.Column width={4}>
         {props.order_items.map(order_item => (
@@ -41,14 +40,11 @@ const Order = (props) => (
               <Divider/>
             </div>
           ))}
-        {/* <Card.Group>
-        {props.order_items.map(order_item => (
-            <Content key={order_item.line_num} order={order_item}/>
-        ))}
-        </Card.Group> */}
         
         </Grid.Column>
         <Grid.Column floated="right" width={12}>
+        <Header as='h2'>{getStatus(props.order)}</Header>
+        <Maps />
         </Grid.Column>
         </Grid>
     </Layout>

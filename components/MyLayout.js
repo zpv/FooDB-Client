@@ -1,4 +1,13 @@
 import Header from './Header'
+import NProgress from 'nprogress'
+import Router from 'next/router'
+
+Router.onRouteChangeStart = () => {
+  console.log("ROUTE STARTED")
+  NProgress.start()}
+Router.onRouteChangeComplete = () => {console.log("route done")
+NProgress.done()}
+Router.onRouteChangeError = () => NProgress.done()
 
 const layoutStyle = {
   margin: 20,

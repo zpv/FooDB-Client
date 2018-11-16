@@ -2,6 +2,7 @@ import Layout from '../../components/MyLayout.js'
 import { get } from '../../lib/request'
 import Link from 'next/link'
 
+import { getStatus } from '../../services/orderApi'
 import redirect from '../../lib/redirect'
 import { getJwt, isAuthenticated, redirectUnauthenticated } from '../../lib/auth'
 import { Divider, Card } from 'semantic-ui-react';
@@ -10,10 +11,10 @@ const Order = (props) => (
     <Link href={'/order?id=' + props.order.order_id} as={'/order/' + props.order.order_id}>
     <Card fluid>
     <Card.Content>
-        <Card.Header>Order #{props.order.order_id}</Card.Header>
+        <Card.Header>Order #{props.order.order_id} – {props.order.name}</Card.Header>
         <Card.Meta>{props.order.placed_datetime}</Card.Meta>
         <Card.Description>
-        
+        {getStatus(props.order)}
         </Card.Description>
         {/* <style jsx>{`
             div {
@@ -37,7 +38,7 @@ const Index = (props) => (
         <h1>Your Past Orders</h1>
         <Card.Group stackable>
         {props.orders.map(order => (
-            <Order key={order.order_num} order={order}/>
+            <Order key={order.order_id} order={order}/>
         ))}
         </Card.Group>
         

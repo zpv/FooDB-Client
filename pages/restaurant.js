@@ -5,6 +5,8 @@ import { get } from '../lib/request'
 import { isAuthenticated } from '../lib/auth'
 import { Grid, Card, Icon } from 'semantic-ui-react'
 
+import NProgress from 'nprogress'
+
 const slugify = (str) => (
 str.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
@@ -23,6 +25,7 @@ const Restaurant = (props) =>  {
     const addToCart = (e, {name, price}) => {
         console.log(name, price)
         cart.addItem({name, price})
+        NProgress.start()
     }
     const Content = (props) => (
         <Card name={props.food.name} price={props.food.price} onClick={addToCart}>
