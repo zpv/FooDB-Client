@@ -67,9 +67,6 @@ export default class Cart extends Component {
           <span style={{width: '100%', textAlign: 'right', alignSelf: 'center'}}>Subtotal: ${this.state.total}</span>
           </div>
         </Card.Content>
-
-        
-
       </Card>
 
       </>

@@ -2,14 +2,28 @@ import { post, get } from "../lib/request"
 
 export const getStatus = (order) => {
   if (order.delivered_datetime) {
-      return "Delivered"
+      return "Delivered – enjoy your food!"
   } else if (order.received_datetime) {
-      return "Driver is on the way to deliver your order"
+      return `Driver #${order.driver_id} is on the way to deliver your order`
   }else if (order.prepared_datetime) {
-    return "Driver is on the way to the restaurant"
+    return `Driver #${order.driver_id} is on the way to the restaurant`
   }
    else {
       return "Restaurant is preparing your meal"
+  }
+}
+
+export const getDeliveryStatus = (order) => {
+  if (order.received_datetime) {
+      return (<>
+        <span>Deliver the order to:</span><br/>
+        <b>{order.address}</b>
+      </>)
+  }else if (order.prepared_datetime) {
+    return (<>
+      <span>Order is ready to be picked up at:</span><br/>
+      <b>{order.r_address}</b>
+    </>)
   }
 }
 

@@ -37,13 +37,6 @@ const Restaurant = (props) =>  {
             <Card.Description>
             {props.food.description}
             </Card.Description>
-            {/* <style jsx>{`
-                div {
-                    margin-bottom: 5px;
-                }
-            `}
-                
-            </style> */}
         </Card.Content>
         </Card>
     )
