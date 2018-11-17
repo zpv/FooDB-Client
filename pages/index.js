@@ -20,12 +20,19 @@ const slugify = (str) => (str.toString().toLowerCase()
 const PostLink = (props) => (
     <Link as={`/restaurant/${slugify(props.name)}/${props.id}`} href={`/restaurant?id=${props.id}&name=${props.name}`}>
     <Card>
-    <Image src={props.img} style={imageStyle} />
-        <Card.Content>
+            <Image src={props.img} style={imageStyle} />
+            <Card.Content>
             <Card.Header>{props.name}</Card.Header>
-            <Card.Meta>{props.rating} <Icon name="star"/></Card.Meta>
-        </Card.Content>
-    </Card>
+            <Card.Meta>
+                <span className='date'>{props.category}</span>
+            </Card.Meta>
+            </Card.Content>
+            <Card.Content extra>
+                <Link as={`/restaurant/${slugify(props.name)}/${props.id}/reviews`} href={`/restaurant-reviews?id=${props.id}&name=${props.name}`}>
+                <a>{props.rating} <Icon name="star"/></a>
+                </Link>
+            </Card.Content>
+        </Card>
     </Link>
 )
 
@@ -35,7 +42,7 @@ const Index = (props) => (
         <Card.Group>
         
         {props.restaurants.map((restaurant) => (
-            <PostLink key={restaurant.restaurant_id} id={restaurant.restaurant_id} name={restaurant.name} rating={restaurant.rating} img={restaurant.img_url}></PostLink>
+            <PostLink key={restaurant.restaurant_id} id={restaurant.restaurant_id} name={restaurant.name} rating={restaurant.rating} img={restaurant.img_url} category={restaurant.category}></PostLink>
         ))}
         
         </Card.Group>
