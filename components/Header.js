@@ -19,7 +19,7 @@ export default class Header extends Component {
     return (
       <Menu stackable>
         <Menu.Item>
-          <img style={logoStyle} src='https://react.semantic-ui.com/logo.png' /> <span style={fooDBStyle}><b>FooDB</b></span>
+          <img style={logoStyle} src='https://i.imgur.com/HOACCe3.png' /> <span style={fooDBStyle}><b>FooDB</b></span>
         </Menu.Item>
         <Link href="/">
         <Menu.Item
