@@ -31,16 +31,17 @@ export class MapContainer extends Component {
             minHeight: "600px"
           }}
           google={this.props.google}
-          zoom={14}
+          initialCenter={{
+            lat: this.props.lat,
+            lng: this.props.lng
+          }}
+          zoom={16}
         >
           <Marker
+            title={this.props.name}
             onClick={this.onMarkerClick}
-            icon={{
-              url: "/img/icon.svg",
-              anchor: new google.maps.Point(32, 32),
-              scaledSize: new google.maps.Size(64, 64)
-            }}
-            name={"Current location"}
+            position={{lat: this.props.lat, lng: this.props.lng}}
+            name={this.props.name}
           />
           <InfoWindow
             marker={this.state.activeMarker}

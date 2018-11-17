@@ -21,7 +21,8 @@ app.prepare()
         server.get('/restaurant/:seo?/:id/reviews', async (req, res) => {
             const actualPage = '/restaurant-reviews'
             const { id } = req.params
-            const { data } = await get(`/restaurants/${id}`)
+
+            const { data } = await get(`/restaurants/${id}/reviews`)
             const { name } = data
 
             const queryParams = {id, name}

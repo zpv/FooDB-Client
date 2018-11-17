@@ -16,10 +16,6 @@ str.toString().toLowerCase()
     .replace(/-+$/, '')            // Trim - from end of text
 )
 
-
-
-
-
 const Restaurant = (props) =>  {
     let cart;
     const addToCart = (e, {name, price}) => {

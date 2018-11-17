@@ -40,11 +40,15 @@ const Order = (props) => (
               <Divider/>
             </div>
           ))}
+          <div style={{display: 'flex'}}>
+          <span style={{width: '100%', textAlign: 'right', alignSelf: 'center'}}><b>Subtotal:</b> ${props.subtotal.toFixed(2)}</span>
+          </div>
+
         
         </Grid.Column>
         <Grid.Column floated="right" width={12}>
         <Header as='h2'>{getStatus(props.order)}</Header>
-        <Maps />
+        <Maps lat={props.order.lat} lng={props.order.lon} name={props.order.name}/>
         </Grid.Column>
         </Grid>
     </Layout>
@@ -53,10 +57,10 @@ const Order = (props) => (
 Order.getInitialProps = async function (context) {
     const { id } = context.query
     const { data } = await get(`/orders/${id}`, getJwt(context))
-    const { order, order_items } = data
+    const { order, order_items, subtotal } = data
     const auth = isAuthenticated(context);
 
-    return { order, order_items, auth }
+    return { order, order_items, auth, subtotal }
 }
 
 export default Order
