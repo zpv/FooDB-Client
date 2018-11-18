@@ -55,7 +55,7 @@ export default class Header extends Component {
         }
         {this.props.did ?
         <>
-        <Link href="/driver?id={did}">
+        <Link href={"/driver?id="+ this.props.did}>
         <Menu.Item
             name='Deliveries'
         >Deliveries</Menu.Item>
