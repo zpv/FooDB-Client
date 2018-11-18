@@ -6,6 +6,7 @@ import { getStatus } from '../../services/orderApi'
 import redirect from '../../lib/redirect'
 import { getJwt, isAuthenticated, redirectUnauthenticated } from '../../lib/auth'
 import { Divider, Card, Icon, Button } from 'semantic-ui-react';
+import { getCookieFromBrowser } from '../../lib/session.js';
 
 const Order = (props) => (
     <Link href={'/order?id=' + props.order.order_id} as={'/order/' + props.order.order_id}>
@@ -33,7 +34,7 @@ const Order = (props) => (
 )
 
 const Index = (props) => (
-    <Layout auth>
+    <Layout auth did>
         <h1>User Profile</h1>
         <b>Name: </b>{props.data.name}<br/>
         <b>Email: </b>{props.data.email}<br/>
@@ -60,8 +61,8 @@ Index.getInitialProps = async function (context) {
 
     const { data } = await get('/users', getJwt(context))
     const orders = (await get('/orders/me', getJwt(context))).data
-
-    return { data, orders }
+    const did = getCookieFromBrowser("did")
+    return { data, orders, did }
 }
 
 export default Index
