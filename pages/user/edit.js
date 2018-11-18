@@ -59,21 +59,28 @@ class EditUser extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Field>
                     <label>Full Name</label>
-                    <input type="text" placeholder="Name" name="name" />
+                    <input type="text" value={this.props.name} placeholder="Name" name="name" />
                     </Form.Field>
                     <Form.Field>
                     <label>Email</label>
-                    <input type="email" placeholder="Email" name="email" />
+                    <input type="email" value={this.props.email} placeholder="Email" name="email" />
                     </Form.Field>
                     <Form.Field>
                     <label>Phone Number</label>
-                    <input type="tel" placeholder="Phone Number" name="phone" pattern="^\d{10}$"/>
+                    <input type="tel" value={this.props.phone_num} placeholder="Phone Number" name="phone" pattern="^\d{10}$"/>
                     </Form.Field>
                     <Form.Field>
                     <label>Address</label>
                     <input value={this.props.address} type="text" placeholder="Address" name="address"/>
                     </Form.Field>
-                    
+                    <Form.Field>
+                    <label>Password</label>
+                    <input type="text" placeholder="Enter Your Password" name="password"/>
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Password Confirmation</label>
+                    <input type="text" placeholder="Re-enter Your Password" name="password_confirmation"/>
+                    </Form.Field>
                     <Button type="submit">Submit</Button>
                 </Form>
             </Layout>

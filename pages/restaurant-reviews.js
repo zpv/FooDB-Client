@@ -45,7 +45,7 @@ const RestaurantReviews = (props) => (
 
 RestaurantReviews.getInitialProps = async function (context) {
     const { id, name } = context.query
-    const {data} = await get(`/restaurants/${id}/reviews`)
+    const {data} = await get(`/restaurants/${id}/rest-reviews`)
     const auth = isAuthenticated(context);
 
     return { data, name, auth }

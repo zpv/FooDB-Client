@@ -29,12 +29,22 @@ const Order = (props) => (
         <Icon name='dollar' />
         <a>Total: {props.order.subtotal}</a>
     </Card.Content>
+    {  (props.restReviews.filter(rev => rev.restaurant_id === props.order.restaurant_id)
+            .length > 0)?
+    <Link href={'/user/review?rid='+props.order.restaurant_id}>
+    <Card.Content extra>
+          <Button  basic color='green'>
+              Review the Restaurant
+            </Button>
+          </Card.Content>
+          </Link> : <></>
+    }
     </Card>
     </Link>
 )
 
 const Index = (props) => (
-    <Layout auth did>
+    <Layout auth>
         <h1>User Profile</h1>
         <b>Name: </b>{props.data.name}<br/>
         <b>Email: </b>{props.data.email}<br/>
@@ -47,7 +57,7 @@ const Index = (props) => (
         <h1>Your Past Orders</h1>
         <Card.Group stackable>
         {props.orders.map(order => (
-            <Order key={order.order_id} order={order}/>
+            <Order key={order.order_id} order={order} data={props.data} restReviews={props.restReviews}/>
         ))}
         </Card.Group>
         
@@ -61,8 +71,9 @@ Index.getInitialProps = async function (context) {
 
     const { data } = await get('/users', getJwt(context))
     const orders = (await get('/orders/me', getJwt(context))).data
+    const restReviews = (await get('/restaurants/'+data.user_id+"/user-rest-reviews")).data
     const did = getCookieFromBrowser("did")
-    return { data, orders, did }
+    return { data, orders, restReviews,did }
 }
 
 export default Index
