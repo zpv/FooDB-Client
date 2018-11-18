@@ -3,6 +3,7 @@ import Layout from '../components/MyLayout.js'
 import { get } from '../lib/request'
 import { isAuthenticated } from '../lib/auth'
 import { Card, Icon, Image } from 'semantic-ui-react'
+import { getCookieFromBrowser } from "../lib/session"
 
 const imageStyle = {
     maxHeight: '150px',
@@ -37,7 +38,7 @@ const PostLink = (props) => (
 )
 
 const Index = (props) => (
-    <Layout auth={props.auth}>
+    <Layout auth={props.auth} did={props.did}>
         <h1>Food Delivery</h1>
         <Card.Group>
         
@@ -51,12 +52,16 @@ const Index = (props) => (
 
 Index.getInitialProps = async function(context) {
     const {data} = await get('/restaurants/list')
-
+    var id = getCookieFromBrowser("did");
+    if (id === undefined) {
+        id = 0;
+    }
     console.log(`Data fetched. Count: ${data.length}`)
 
     return {
         restaurants: data,
-        auth: isAuthenticated(context)
+        auth: isAuthenticated(context),
+        did: id
     }
   }
 

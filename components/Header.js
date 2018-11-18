@@ -10,7 +10,7 @@ const fooDBStyle = {
 }
 
 const logoStyle = {
-    width: '25px'
+    width: '30px'
 }
 
 export default class Header extends Component {
@@ -53,6 +53,14 @@ export default class Header extends Component {
             </Link>
             </>
         }
+        {this.props.did ?
+        <>
+        <Link href="/driver?id={did}">
+        <Menu.Item
+            name='Deliveries'
+        >Deliveries</Menu.Item>
+        </Link>
+        </> : <>
         <Link href="/driver/signin">
         <Menu.Item
           name='deliver'
@@ -60,6 +68,9 @@ export default class Header extends Component {
           Deliver
         </Menu.Item>
         </Link>
+        </>
+        }
+        
       </Menu>
     )
   }

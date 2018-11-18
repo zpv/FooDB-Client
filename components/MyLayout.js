@@ -16,7 +16,7 @@ const layoutStyle = {
 
 const Layout = (props) => (
   <div style={layoutStyle}>
-    <Header auth={props.auth}/>
+    <Header auth={props.auth} did={props.did}/>
     {props.children}
   </div>
 )
