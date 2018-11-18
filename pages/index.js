@@ -38,7 +38,7 @@ const PostLink = (props) => (
 )
 
 const Index = (props) => (
-    <Layout auth={props.auth} did={props.did}>
+    <Layout auth={props.auth}>
         <h1>Food Delivery</h1>
         <Card.Group>
         
@@ -52,16 +52,12 @@ const Index = (props) => (
 
 Index.getInitialProps = async function(context) {
     const {data} = await get('/restaurants/list')
-    var id = getCookieFromBrowser("did");
-    if (id === undefined) {
-        id = 0;
-    }
+
     console.log(`Data fetched. Count: ${data.length}`)
 
     return {
         restaurants: data,
-        auth: isAuthenticated(context),
-        did: id
+        auth: isAuthenticated(context)
     }
   }
 

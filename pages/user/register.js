@@ -29,7 +29,7 @@ class Register extends Component {
                 error: "Passwords do not match."
             });
         } else {
-            const error = await signUpUser(name, email, password, phone, address)
+            const error = await signUpDriver(name, email, password, phone, address)
             if (error) {
                 this.setState({
                     error
