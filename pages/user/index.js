@@ -58,6 +58,9 @@ const Index = (props) => (
         <Link href="/user/edit">
             <Button>Edit Profile</Button>  
         </Link>
+        <Link href="/user/delete">
+            <Button>Delete Profile</Button>
+        </Link>    
         <Divider/>
         <h1>Your Past Orders</h1>
         <Card.Group stackable>

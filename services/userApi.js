@@ -47,3 +47,27 @@ export const createDriver = async (
     return {auth: false, error: error.toString()}
   }
 };
+
+export const deleteUser = async (
+  name,
+  email,
+  password,
+  phone,
+  address,
+  userType
+) => {
+  try {
+    const {data} = await delete("/users/delete", {
+      name,
+      email,
+      passowrd,
+      phone,
+      address
+    });
+    return data;
+  } catch (error) {
+    if (error.response.status == 409)
+        return {auth: false, error: "User with the same email does not exist."}
+    return {auth: false, error: error.toString()}
+  }
+}
