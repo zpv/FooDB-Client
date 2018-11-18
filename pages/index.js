@@ -29,9 +29,7 @@ const PostLink = (props) => (
             </Card.Meta>
             </Card.Content>
             <Card.Content extra>
-                <Link as={`/restaurant/${slugify(props.name)}/${props.id}/reviews`} href={`/restaurant-reviews?id=${props.id}&name=${props.name}`}>
-                <a>{props.rating} <Icon name="star"/></a>
-                </Link>
+                {props.rating} <Icon name="star" />
             </Card.Content>
         </Card>
     </Link>
