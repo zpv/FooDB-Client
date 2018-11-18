@@ -10,7 +10,7 @@ import { getCookieFromBrowser } from '../../lib/session.js';
 
 const OrderDetailsBtn = (props) => (
     <Link href={'/order?id=' + props.order.order_id} as={'/order/' + props.order.order_id}>
-    <Button basic color='red'>
+    <Button basic color='gray'>
       Order Details
     </Button>
     </Link>
@@ -32,7 +32,7 @@ const Order = (props) => (
     </Card.Content>
     <Card.Content extra>
     {  (props.restReviews.filter(rev => rev.restaurant_id === props.order.restaurant_id)
-            .length > 0)?
+            .length > 0 && props.order.delivered_datetime)?
             <>
 
             <OrderDetailsBtn order={props.order}/>
