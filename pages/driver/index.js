@@ -5,8 +5,9 @@ import Link from 'next/link'
 import { getDeliveryStatus, updateOrder } from '../../services/orderApi'
 import redirect from '../../lib/redirect'
 import { getJwt, isAuthenticated, redirectUnauthenticated } from '../../lib/auth'
-import { Divider, Card, Button } from 'semantic-ui-react';
+import { Divider, Card, Button, Icon, Image } from 'semantic-ui-react';
 import React, { Component } from 'react'
+import { getCookieFromBrowser } from "../../lib/session"
 
 export default class DriverManager extends Component {
   static async getInitialProps(context) {
@@ -63,8 +64,8 @@ export default class DriverManager extends Component {
     )
 
     return (
-      <Layout auth>
-        <h1>Assigned Deliveries</h1>
+      <Layout auth did>
+        <h1>Your Assigned Deliveries</h1>
         <Card.Group stackable>
         {this.props.data.map(order => (
             <Order key={order.order_id} order={order}/>

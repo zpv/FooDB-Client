@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { signIn } from '../../lib/auth'
+import { signInUser } from '../../lib/auth'
 import Layout from '../../components/MyLayout.js'
 import { Form, Button, Message } from 'semantic-ui-react'
 

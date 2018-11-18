@@ -21,6 +21,14 @@ export default class Header extends Component {
         <Menu.Item>
           <img style={logoStyle} src='https://i.imgur.com/HOACCe3.png' /> <span style={fooDBStyle}><b>FooDB</b></span>
         </Menu.Item>
+        {this.props.did ?
+        <>
+        <Link href={"/driver?id="+this.props.did}>
+        <Menu.Item
+            name='Deliveries'
+        >Deliveries</Menu.Item>
+        </Link>
+        </> :
         <Link href="/">
         <Menu.Item
           name='home'
@@ -28,6 +36,7 @@ export default class Header extends Component {
           Home
         </Menu.Item>
         </Link>
+        }
         {this.props.auth ?
             <>
             <Link href="/user">
@@ -55,11 +64,6 @@ export default class Header extends Component {
         }
         {this.props.did ?
         <>
-        <Link href={"/driver?id="+ this.props.did}>
-        <Menu.Item
-            name='Deliveries'
-        >Deliveries</Menu.Item>
-        </Link>
         </> : <>
         <Link href="/driver/signin">
         <Menu.Item
