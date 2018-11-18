@@ -1,5 +1,6 @@
 import { Component } from 'react'
-import { signIn } from '../../lib/auth'
+import { signInDriver } from '../../lib/auth'
+import Link from 'next/link'
 import Layout from '../../components/MyLayout.js'
 import { Form, Button, Message } from 'semantic-ui-react'
 
@@ -21,7 +22,7 @@ class SignIn extends Component {
                 error: "Please complete all the fields."
             });
         } else {
-            const error = await signInUser(email, password)
+            const error = await signInDriver(email, password)
             if (error) {
                 this.setState({
                     error
@@ -32,7 +33,7 @@ class SignIn extends Component {
     render() {
         return (
             <Layout>
-                <h1>Sign in</h1>
+                <h1>Driver Sign in</h1>
                 {this.state.error && <Message negative>
                     <Message.Header>An error has occurred.</Message.Header>
                     <p>{this.state.error}</p>
@@ -48,7 +49,10 @@ class SignIn extends Component {
                         <input type="password" placeholder="Password" name="password" />
                     </Form.Field>
                     <Button type="submit">Submit</Button>
-
+                    <h1>First Time Delivering?</h1>
+                    <Link href="/driver/register">
+                    <a>Click to register for a driver account.</a>
+                    </Link>
                 </Form>
             </Layout>
         )

@@ -53,6 +53,13 @@ export default class Header extends Component {
             </Link>
             </>
         }
+        <Link href="/driver/signin">
+        <Menu.Item
+          name='deliver'
+        >
+          Deliver
+        </Menu.Item>
+        </Link>
       </Menu>
     )
   }

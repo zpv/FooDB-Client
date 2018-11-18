@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { signUp } from '../../lib/auth'
+import { signUpDriver } from '../../lib/auth'
 import { Form, Button, Message } from 'semantic-ui-react'
 
 import Layout from '../../components/MyLayout.js'
@@ -29,7 +29,7 @@ class Register extends Component {
                 error: "Passwords do not match."
             });
         } else {
-            const error = await signUpUser(name, email, password, phone, address)
+            const error = await signUpDriver(name, email, password, phone, address)
             if (error) {
                 this.setState({
                     error
@@ -40,7 +40,7 @@ class Register extends Component {
     render() {
         return (
             <Layout>
-                <h1>Register for An Account</h1>
+                <h1>Register for A Driver Account</h1>
                 {this.state.error && <Message negative>
                     <Message.Header>An error has occurred.</Message.Header>
                     <p>{this.state.error}</p>

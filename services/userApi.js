@@ -5,7 +5,8 @@ export const createUser = async (
   email,
   password,
   phone,
-  address
+  address,
+  userType
 ) => {
   try {
     const {data}  = await post("/users/register", {
@@ -19,6 +20,30 @@ export const createUser = async (
   } catch (error) {
     if (error.response.status == 409)
         return {auth: false, error: "User with the same email already exists."}
+    return {auth: false, error: error.toString()}
+  }
+};
+
+export const createDriver = async (
+  name,
+  email,
+  password,
+  phone,
+  address,
+  userType
+) => {
+  try {
+    const {data}  = await post("/drivers/register", {
+        name,
+        email,
+        password,
+        phone,
+        address
+    });
+    return data;
+  } catch (error) {
+    if (error.response.status == 409)
+        return {auth: false, error: "Driver with the same email already exists."}
     return {auth: false, error: error.toString()}
   }
 };
