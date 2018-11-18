@@ -39,6 +39,26 @@ export const updateOrder = async (order_id, status) => {
   }
 }
 
+export const createReview = async (
+  restaurant_id,
+  title,
+  stars,
+  content,
+  jwt
+) => {
+  try {
+    const {data}  = await post(`/restaurants/${restaurant_id}/review`, {
+      title,
+      stars,
+      content
+    }, jwt);
+    return data;
+  } catch (error) {
+    return {auth: false, error: error.toString()}
+  }
+
+}
+
 export const createOrder = async (
   restaurant_id,
   food_items,

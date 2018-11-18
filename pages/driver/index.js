@@ -14,7 +14,7 @@ export default class DriverManager extends Component {
     const { id } = context.query
     const { data } = await get(`/drivers/${id}/orders`, getJwt(context))
   
-    return { data }
+    return { data, id }
   }
 
   constructor(props) {
@@ -64,7 +64,7 @@ export default class DriverManager extends Component {
     )
 
     return (
-      <Layout auth did>
+      <Layout auth did={this.props.id}>
         <h1>Your Assigned Deliveries</h1>
         <Card.Group stackable>
         {this.props.data.map(order => (

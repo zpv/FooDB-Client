@@ -1,15 +1,27 @@
 import { Component } from 'react'
-import { signInUser } from '../../lib/auth'
+import { createReview } from '../../services/orderApi'
 import Layout from '../../components/MyLayout.js'
 import { get } from '../../lib/request'
+import { getJwt } from '../../lib/auth'
+import Router from 'next/router'
 import { Form, Button, Message } from 'semantic-ui-react'
 
-class SignIn extends Component {
+const slugify = (str) => (
+    str.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '')            // Trim - from end of text
+    )    
+
+class Review extends Component {
     static async getInitialProps(context) {
         const { rid } = context.query
         const { data } = await get(`/restaurants/${rid}`)
+        const jwt = getJwt(context)
       
-        return { data }
+        return { data, rid, jwt }
       }
     constructor(props) {
         super(props)
@@ -22,18 +34,23 @@ class SignIn extends Component {
         event.preventDefault();
         const stars = event.target.elements.stars.value
         const review = event.target.elements.review.value;
+        const title = event.target.elements.title.value;
 
-        if (!stars || !review) {
+        if (!stars || !review || !title) {
             this.setState({
                 error: "Please complete all the fields."
             });
         } else {
             // TODO: post the review
-            const error = await signInUser(email, password)
-            if (error) {
+            const data = await createReview(this.props.rid, title, stars, review, this.props.jwt)
+            if (data.error) {
                 this.setState({
-                    error
+                    error: data.error
                 });
+            } else {
+                console.log(data)
+                Router.push(`/restaurant/${slugify(this.props.data.name)}/${this.props.rid}/reviews`, `/restaurant-reviews?id=${this.props.rid}&name=${this.props.data.name}`)
+
             }
         }
     }
@@ -49,12 +66,13 @@ class SignIn extends Component {
                     
                     <Form.Field>
                         <label>Stars</label>
-                        <input type="stars" placeholder="stars" name="stars" />
+                        <input type="text" placeholder="Stars" name="stars" />
                     </Form.Field>
                     <Form.Field>
-                        <label>Review</label>
-                        <input type="review" placeholder="review" name="review" />
+                        <label>Review Title</label>
+                        <input type="text" placeholder="Review Title" name="title" />
                     </Form.Field>
+                    <Form.TextArea label='Review Body' placeholder='Tell us about your experience...' name='review' />
                     <Button type="submit">Submit</Button>
 
                 </Form>
@@ -64,4 +82,4 @@ class SignIn extends Component {
 
 }
 
-export default SignIn
+export default Review

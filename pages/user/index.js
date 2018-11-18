@@ -8,39 +8,44 @@ import { getJwt, isAuthenticated, redirectUnauthenticated } from '../../lib/auth
 import { Divider, Card, Icon, Button } from 'semantic-ui-react';
 import { getCookieFromBrowser } from '../../lib/session.js';
 
-const Order = (props) => (
+const OrderDetailsBtn = (props) => (
     <Link href={'/order?id=' + props.order.order_id} as={'/order/' + props.order.order_id}>
+    <Button basic color='red'>
+      Order Details
+    </Button>
+    </Link>
+)
+
+const Order = (props) => (
     <Card fluid>
+
     <Card.Content>
         <Card.Header>Order #{props.order.order_id} – {props.order.name}</Card.Header>
         <Card.Meta>{props.order.placed_datetime}</Card.Meta>
         <Card.Description>
         {getStatus(props.order)}
         </Card.Description>
-        {/* <style jsx>{`
-            div {
-                margin-bottom: 5px;
-            }
-        `}
-            
-        </style> */}
     </Card.Content>
     <Card.Content extra>
         <Icon name='dollar' />
         <a>Total: {props.order.subtotal}</a>
     </Card.Content>
+    <Card.Content extra>
     {  (props.restReviews.filter(rev => rev.restaurant_id === props.order.restaurant_id)
             .length > 0)?
-    <Link href={'/user/review?rid='+props.order.restaurant_id}>
-    <Card.Content extra>
+            <>
+
+            <OrderDetailsBtn order={props.order}/>
+            <Link href={'/user/review?rid='+props.order.restaurant_id}>
+
           <Button  basic color='green'>
               Review the Restaurant
             </Button>
-          </Card.Content>
-          </Link> : <></>
+            </Link></> : <OrderDetailsBtn order={props.order}/>
     }
+     </Card.Content>
+
     </Card>
-    </Link>
 )
 
 const Index = (props) => (
@@ -71,9 +76,9 @@ Index.getInitialProps = async function (context) {
 
     const { data } = await get('/users', getJwt(context))
     const orders = (await get('/orders/me', getJwt(context))).data
-    const restReviews = (await get('/restaurants/'+data.user_id+"/user-rest-reviews")).data
-    const did = getCookieFromBrowser("did")
-    return { data, orders, restReviews,did }
+    const restReviews = (await get(`/users/${data.user_id}/rest-reviews`)).data
+
+    return { data, orders, restReviews }
 }
 
 export default Index
