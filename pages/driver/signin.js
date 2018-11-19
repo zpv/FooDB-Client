@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { signInDriver } from '../../lib/auth'
+import { signInDriver,isAuthenticated } from '../../lib/auth'
 import Link from 'next/link'
 import Layout from '../../components/MyLayout.js'
 import { Form, Button, Message } from 'semantic-ui-react'
@@ -11,6 +11,9 @@ class SignIn extends Component {
             error: null
         };
     }
+    static async getInitialProps(context) {
+        return { auth: isAuthenticated(context) }
+      }
 
     handleSubmit = async event => {
         event.preventDefault();
@@ -32,7 +35,7 @@ class SignIn extends Component {
     }
     render() {
         return (
-            <Layout>
+            <Layout auth={this.props.auth}>
                 <h1>Driver Sign in</h1>
                 {this.state.error && <Message negative>
                     <Message.Header>An error has occurred.</Message.Header>

@@ -28,6 +28,11 @@ export default class Header extends Component {
             name='Deliveries'
         >Deliveries</Menu.Item>
         </Link>
+        <Link href={"/driver/profile?id="+this.props.did}>
+        <Menu.Item
+            name='Deliveries'
+        >Profile</Menu.Item>
+        </Link>
         </> :
         <Link href="/">
         <Menu.Item
@@ -37,13 +42,15 @@ export default class Header extends Component {
         </Menu.Item>
         </Link>
         }
+        {(this.props.auth && !this.props.did)?
+        <Link href="/user">
+        <Menu.Item
+            name='profile'
+        >Profile</Menu.Item>
+        </Link> : <></>
+        }
         {this.props.auth ?
             <>
-            <Link href="/user">
-            <Menu.Item
-                name='profile'
-            >Profile</Menu.Item>
-            </Link>
             <Menu.Item
                 name='sign-out'
                 onClick={signOut}

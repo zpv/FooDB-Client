@@ -15,10 +15,6 @@ class Delete extends Component {
         event.preventDefault();
         const email = event.target.elements.email.value
         const password = event.target.elements.password.value;
-<<<<<<< HEAD
-       //ß const password_confirmation = event.target.elements.password_confirmation.value;
-=======
->>>>>>> 21cd1ece0f17418b47ffea4751b5b0604e653e99
 
         if (!email || !password) {
             this.setState({
@@ -35,7 +31,7 @@ class Delete extends Component {
     }
     render() {
         return (
-            <Layout>
+            <Layout auth>
                 <h1>Delete Profile</h1>
                 {this.state.error && <Message negative>
                     <Message.Header>An error has occurred.</Message.Header>

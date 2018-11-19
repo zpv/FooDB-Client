@@ -56,7 +56,7 @@ class EditUser extends Component {
     }
     render() {
         return (
-            <Layout>
+            <Layout auth>
                 <h1>Edit User Profile</h1>
                 {this.state.error && <Message negative>
                     <Message.Header>An error has occurred.</Message.Header>
