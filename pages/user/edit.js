@@ -41,7 +41,6 @@ class EditUser extends Component {
                 error: "Passwords do not match."
             });
         } else {
-            console.log("HUH")
             const data = await editUser(name, email, password, phone, address, this.props.jwt)
             if (data.error) {
                 this.setState({
@@ -49,11 +48,6 @@ class EditUser extends Component {
                 });
             } else {
                 Router.push(`/user`)
-            }
-            if (error2) {
-                this.setState({
-                    error2
-                });
             }
         }
     }
