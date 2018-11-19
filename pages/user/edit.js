@@ -1,8 +1,14 @@
 import { Component } from 'react'
+<<<<<<< HEAD
 import { signUpUser , deregisterUser } from '../../lib/auth'
 import { get, post } from '../../lib/request'
+=======
+import { editUser } from '../../services/userApi'
+import { get } from '../../lib/request'
+>>>>>>> a1135970145f4fa917eae0123575afd46c56e99b
 import { Form, Button, Message } from 'semantic-ui-react'
 import { getJwt, isAuthenticated, redirectUnauthenticated } from '../../lib/auth'
+import Router from 'next/router'
 
 import Layout from '../../components/MyLayout.js'
 
@@ -18,9 +24,9 @@ class EditUser extends Component {
       if (redirectUnauthenticated('/user/register', context)) {
         return {}
       }
-
-      const { data } = await get('/users', getJwt(context))
-      return data
+      const jwt = getJwt(context)
+      const { data } = await get('/users', jwt)
+      return { data, jwt }
     }
 
     handleSubmit = async event => {
@@ -40,12 +46,20 @@ class EditUser extends Component {
                 error: "Passwords do not match."
             });
         } else {
+<<<<<<< HEAD
             const error = deregisterUser(email)
             const error2 = signUpUser(name, email, password, phone, address)
             if (error) {
+=======
+            console.log("HUH")
+            const data = await editUser(name, email, password, phone, address, this.props.jwt)
+            if (data.error) {
+>>>>>>> a1135970145f4fa917eae0123575afd46c56e99b
                 this.setState({
-                    error
+                    error: data.error
                 });
+            } else {
+                Router.push(`/user`)
             }
             if (error2) {
                 this.setState({
@@ -65,6 +79,7 @@ class EditUser extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Field>
                     <label>Full Name</label>
+<<<<<<< HEAD
                     <input type="text" defaultValue={this.props.name} placeholder="Name" name="name" />
                     </Form.Field>
                     <Form.Field>
@@ -78,14 +93,29 @@ class EditUser extends Component {
                     <Form.Field>
                     <label>Address</label>
                     <input defaultValue={this.props.address} type="text" placeholder="Address" name="address"/>
+=======
+                    <input type="text" defaultValue={this.props.data.name} placeholder="Name" name="name" />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Email</label>
+                    <input type="email" defaultValue={this.props.data.email} placeholder="Email" name="email" />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Phone Number</label>
+                    <input type="tel" defaultValue={this.props.data.phone_num} placeholder="Phone Number" name="phone" pattern="^\d{10}$"/>
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Address</label>
+                    <input defaultValue={this.props.data.address} type="text" placeholder="Address" name="address"/>
+>>>>>>> a1135970145f4fa917eae0123575afd46c56e99b
                     </Form.Field>
                     <Form.Field>
                     <label>Password</label>
-                    <input type="text" placeholder="Enter Your Password" name="password"/>
+                    <input type="password" placeholder="Enter Your Password" name="password"/>
                     </Form.Field>
                     <Form.Field>
                     <label>Password Confirmation</label>
-                    <input type="text" placeholder="Re-enter Your Password" name="password_confirmation"/>
+                    <input type="password" placeholder="Re-enter Your Password" name="password_confirmation"/>
                     </Form.Field>
                     <Button type="submit">Submit</Button>
                 </Form>

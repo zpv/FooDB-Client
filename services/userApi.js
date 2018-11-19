@@ -1,4 +1,4 @@
-import { post, get } from "../lib/request"
+import { post, get, deleteCall } from "../lib/request"
 
 export const createUser = async (
   name,
@@ -24,6 +24,29 @@ export const createUser = async (
   }
 };
 
+export const editUser = async (
+  name,
+  email,
+  password,
+  phone,
+  address,
+  jwt
+) => {
+  console.log("afwea")
+  try {
+    const { data } = await post("/users/edit", {
+      name,
+      email,
+      password,
+      phone,
+      address
+    }, jwt)
+    return data;
+  } catch (error) {
+    return {auth: false, error: error.toString()}
+  }
+}
+
 export const createDriver = async (
   name,
   email,
@@ -48,21 +71,13 @@ export const createDriver = async (
 };
 
 export const deleteUser = async (
-  name,
-  email,
   password,
-  phone,
-  address,
-  userType 
+  jwt 
 ) => {
   try {
     const {data} = await post("/users/delete", {
-      name,
-      email,
-      password,
-      phone,
-      address
-    });
+      password
+    }, jwt);
     return data;
   } catch (error) {
     if (error.response.status == 401)

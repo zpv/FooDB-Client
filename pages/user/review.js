@@ -48,9 +48,7 @@ class Review extends Component {
                     error: data.error
                 });
             } else {
-                console.log(data)
                 Router.push(`/restaurant/${slugify(this.props.data.name)}/${this.props.rid}/reviews`, `/restaurant-reviews?id=${this.props.rid}&name=${this.props.data.name}`)
-
             }
         }
     }
