@@ -18,7 +18,7 @@ const Content = (props) => (
         </Card.Content>
         <Card.Content extra>
                 <Icon name='user' />
-                Temp
+                {props.review.name}
           </Card.Content>
 
     </Card>
