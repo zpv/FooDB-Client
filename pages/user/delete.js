@@ -15,16 +15,11 @@ class Delete extends Component {
         event.preventDefault();
         const email = event.target.elements.email.value
         const password = event.target.elements.password.value;
-        const password_confirmation = event.target.elements.password_confirmation.value;
 
         if (!email || !password) {
             this.setState({
                 error: "Please complete all the fields."
             });
-        // } else if (password != password_confirmation) {
-        //     this.setState({
-        //         error: "Passwords do not match."
-        //     }) 
         } else {
             const error = await deregisterUser(email, password) 
             if (error) {

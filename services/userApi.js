@@ -54,19 +54,19 @@ export const deleteUser = async (
   password,
   phone,
   address,
-  userType
+  userType 
 ) => {
   try {
-    const {data} = await delete("/users/delete", {
+    const {data} = await post("/users/delete", {
       name,
       email,
-      passowrd,
+      password,
       phone,
       address
     });
     return data;
   } catch (error) {
-    if (error.response.status == 409)
+    if (error.response.status == 401)
         return {auth: false, error: "User with the same email does not exist."}
     return {auth: false, error: error.toString()}
   }
