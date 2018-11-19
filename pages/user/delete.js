@@ -30,13 +30,8 @@ class Delete extends Component {
                 error: "Please complete all the fields."
             });
         } else {
-<<<<<<< HEAD
-            const error = await deregisterUser(email) 
-            if (error) {
-=======
             const data = await deleteUser(password, this.props.jwt) 
             if (data.error) {
->>>>>>> a1135970145f4fa917eae0123575afd46c56e99b
                 this.setState({
                     error: data.error
                 });
