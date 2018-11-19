@@ -16,7 +16,7 @@ class Delete extends Component {
         const { id } = context.query
         const data = (await get(`/drivers/${id}`)).data
         const jwt = getJwt(context)
-        return { jwt, data}
+        return { jwt, data, id}
       }
   
 
@@ -43,7 +43,7 @@ class Delete extends Component {
 
     render() {
         return (
-            <Layout auth>
+            <Layout auth did ={this.props.id}>
                 <h1>Delete Profile</h1>
                 {this.state.error && <Message negative>
                     <Message.Header>An error has occurred.</Message.Header>

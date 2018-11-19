@@ -31,7 +31,6 @@ const Index = (props) => (
         <b>Name: </b>{props.driverdata.name}<br/>
         <b>Email: </b>{props.driverdata.email}<br/>
         <b>Phone #: </b>{props.driverdata.phone_num}<br/>
-        <b>Address: </b>{props.driverdata.address}<br/><br/>
         <Link href={"/driver/edit?id="+props.id}>
             <Button>Edit Profile</Button>  
         </Link>
