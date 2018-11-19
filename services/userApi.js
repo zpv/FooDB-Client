@@ -46,6 +46,28 @@ export const editUser = async (
     return {auth: false, error: error.toString()}
   }
 }
+export const editDriver = async (
+  name,
+  email,
+  password,
+  phone,
+  address,
+  jwt
+) => {
+  console.log("afwea")
+  try {
+    const { data } = await post("/drivers/edit", {
+      name,
+      email,
+      password,
+      phone,
+      address
+    }, jwt)
+    return data;
+  } catch (error) {
+    return {auth: false, error: error.toString()}
+  }
+}
 
 export const createDriver = async (
   name,

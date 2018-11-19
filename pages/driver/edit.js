@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { editUser } from '../../services/userApi'
+import { editDriver } from '../../services/userApi'
 import { get } from '../../lib/request'
 import { Form, Button, Message } from 'semantic-ui-react'
 import { getJwt, isAuthenticated, redirectUnauthenticated } from '../../lib/auth'
@@ -7,7 +7,7 @@ import Router from 'next/router'
 
 import Layout from '../../components/MyLayout.js'
 
-class EditUser extends Component {
+class EditDriver extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -16,12 +16,10 @@ class EditUser extends Component {
     }
     
     static async getInitialProps(context) {
-      if (redirectUnauthenticated('/user/register', context)) {
-        return {}
-      }
       const jwt = getJwt(context)
-      const { data } = await get('/users', jwt)
-      return { data, jwt }
+      const { id } = context.query
+     const data  = (await get(`/drivers/${id}`)).data
+      return { id, data, jwt }
     }
 
     handleSubmit = async event => {
@@ -42,7 +40,7 @@ class EditUser extends Component {
             });
         } else {
             console.log("HUH")
-            const data = await editUser(name, email, password, phone, address, this.props.jwt)
+            const data = await editDriver(name, email, password, phone, address, this.props.jwt)
             if (data.error) {
                 this.setState({
                     error: data.error
@@ -59,8 +57,8 @@ class EditUser extends Component {
     }
     render() {
         return (
-            <Layout auth>
-                <h1>Edit User Profile</h1>
+            <Layout auth did={this.props.id}>
+                <h1>Edit Driver Profile</h1>
                 {this.state.error && <Message negative>
                     <Message.Header>An error has occurred.</Message.Header>
                     <p>{this.state.error}</p>
@@ -98,4 +96,4 @@ class EditUser extends Component {
 
 }
 
-export default EditUser
+export default EditDriver

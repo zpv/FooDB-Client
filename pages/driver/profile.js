@@ -21,9 +21,6 @@ const Order = (props) => (
     <Card.Content>
         <Card.Header>Order #{props.order.order_id} – {props.order.name}</Card.Header>
         <Card.Meta>{props.order.placed_datetime}</Card.Meta>
-        <Card.Description>
-        {getStatus(props.order)}
-        </Card.Description>
     </Card.Content>
     </Card>
 )
@@ -35,16 +32,16 @@ const Index = (props) => (
         <b>Email: </b>{props.driverdata.email}<br/>
         <b>Phone #: </b>{props.driverdata.phone_num}<br/>
         <b>Address: </b>{props.driverdata.address}<br/><br/>
-        <Link href="/driver">
+        <Link href={"/driver/edit?id="+props.id}>
             <Button>Edit Profile</Button>  
         </Link>
-        <Link href="/driver">
+        <Link href={"/driver/delete?id="+props.id}>
             <Button>Delete Profile</Button>
         </Link>    
         <Divider/>
         <h1>Your Past Deliveries</h1>
         <Card.Group stackable>
-        {props.data.map(order => (
+        {props.data.filter(order => order.delivered_datetime !== null).map(order => (
             <Order key={order.order_id} order={order} />
         ))}
         </Card.Group>
@@ -55,7 +52,7 @@ const Index = (props) => (
 Index.getInitialProps = async function (context) {
     const { id } = context.query
     const driverdata  = (await get(`/drivers/${id}`)).data
-    const { data } = await get(`/drivers/${id}/orders`, getJwt(context))
+    const { data } = await get(`/drivers/${id}/allorders`, getJwt(context))
   
     return { driverdata, data, id }
 }
