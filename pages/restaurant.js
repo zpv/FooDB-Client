@@ -87,7 +87,7 @@ Restaurant.getInitialProps = async function (context) {
     const restaurant_data = (await get(`/restaurants/${id}`)).data
     const {data} = await get(`/restaurants/${id}/menu-items`)
     const auth = isAuthenticated(context);
-    const count = await get(`/restaurants/${id}/reviews/count`)
+    const {count} = await get(`/restaurants/${id}/reviews/count`).data
 
     const {category, img_url} = restaurant_data
 
