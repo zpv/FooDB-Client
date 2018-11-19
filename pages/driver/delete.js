@@ -15,8 +15,7 @@ class Delete extends Component {
     static async getInitialProps(context) {
         const { id } = context.query
         const data = (await get(`/drivers/${id}`)).data
-        const jwt = getJwt(context)
-        return { jwt, data}
+        return { data}
       }
   
 
@@ -30,7 +29,7 @@ class Delete extends Component {
                 error: "Please complete all the fields."
             });
         } else {
-            const data = await deleteDriver(this.props.data.email, this.props.jwt) 
+            const data = await deleteDriver(this.props.data.email) 
             if (data.error) {
                 this.setState({
                     error: data.error

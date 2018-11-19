@@ -93,13 +93,12 @@ export const createDriver = async (
 };
 
 export const deleteUser = async (
-  password,
-  jwt 
+  email
 ) => {
   try {
     const {data} = await post("/users/delete", {
-      password
-    }, jwt);
+      email
+    });
     return data;
   } catch (error) {
     if (error.response.status == 401)
@@ -110,12 +109,13 @@ export const deleteUser = async (
 
 export const deleteDriver = async (
   email,
-  jwt 
+  password 
 ) => {
   try {
-    const {data} = await delete("/drivers/delete", {
-      email
-    }, jwt);
+    const {data} = await post("/drivers/delete", {
+      email,
+      password
+    });
     return data;
   } catch (error) {
     if (error.response.status == 401)
