@@ -29,8 +29,7 @@ export const createDriver = async (
   email,
   password,
   phone,
-  address,
-  userType
+  address
 ) => {
   try {
     const {data}  = await post("/drivers/register", {
@@ -49,20 +48,11 @@ export const createDriver = async (
 };
 
 export const deleteUser = async (
-  name,
-  email,
-  password,
-  phone,
-  address,
-  userType
+  email
 ) => {
   try {
-    const {data} = await delete("/users/delete", {
-      name,
-      email,
-      passowrd,
-      phone,
-      address
+    const {data} = await post("/users/delete", {
+      email
     });
     return data;
   } catch (error) {

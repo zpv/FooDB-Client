@@ -1,6 +1,6 @@
 import { Component } from 'react'
-import { signUp } from '../../lib/auth'
-import { get } from '../../lib/request'
+import { signUpUser , deregisterUser } from '../../lib/auth'
+import { get, post } from '../../lib/request'
 import { Form, Button, Message } from 'semantic-ui-react'
 import { getJwt, isAuthenticated, redirectUnauthenticated } from '../../lib/auth'
 
@@ -24,7 +24,7 @@ class EditUser extends Component {
     }
 
     handleSubmit = async event => {
-        event.preventDefault();
+        // event.preventDefault();
         const name = event.target.elements.name.value
         const email = event.target.elements.email.value
         const phone = event.target.elements.phone.value;
@@ -40,10 +40,16 @@ class EditUser extends Component {
                 error: "Passwords do not match."
             });
         } else {
-            const error = await signUp(name, email, password, phone, address)
+            const error = deregisterUser(email)
+            const error2 = signUpUser(name, email, password, phone, address)
             if (error) {
                 this.setState({
                     error
+                });
+            }
+            if (error2) {
+                this.setState({
+                    error2
                 });
             }
         }
@@ -59,19 +65,19 @@ class EditUser extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Field>
                     <label>Full Name</label>
-                    <input type="text" value={this.props.name} placeholder="Name" name="name" />
+                    <input type="text" defaultValue={this.props.name} placeholder="Name" name="name" />
                     </Form.Field>
                     <Form.Field>
                     <label>Email</label>
-                    <input type="email" value={this.props.email} placeholder="Email" name="email" />
+                    <input type="email" defaultValue={this.props.email} placeholder="Email" name="email" />
                     </Form.Field>
                     <Form.Field>
                     <label>Phone Number</label>
-                    <input type="tel" value={this.props.phone_num} placeholder="Phone Number" name="phone" pattern="^\d{10}$"/>
+                    <input type="tel" defaultValue={this.props.phone_num} placeholder="Phone Number" name="phone" pattern="^\d{10}$"/>
                     </Form.Field>
                     <Form.Field>
                     <label>Address</label>
-                    <input value={this.props.address} type="text" placeholder="Address" name="address"/>
+                    <input defaultValue={this.props.address} type="text" placeholder="Address" name="address"/>
                     </Form.Field>
                     <Form.Field>
                     <label>Password</label>
