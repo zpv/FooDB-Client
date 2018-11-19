@@ -20,7 +20,7 @@
   },
   "scripts": {
     "dev": "node start.js",
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production node start.js"
   },
   "devDependencies": {
