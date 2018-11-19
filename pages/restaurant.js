@@ -68,7 +68,7 @@ const Restaurant = (props) =>  {
             <Card.Content extra>
                 <Icon name='user'/>
                 <Link as={`/restaurant/${slugify(props.name)}/${props.id}/reviews`} href={`/restaurant-reviews?id=${props.id}&name=${props.name}`}>
-                <a>{props.count}</a>
+                <a>{props.count} Reviews</a>
                 </Link>
             </Card.Content>
         </Card>
@@ -87,7 +87,7 @@ Restaurant.getInitialProps = async function (context) {
     const restaurant_data = (await get(`/restaurants/${id}`)).data
     const {data} = await get(`/restaurants/${id}/menu-items`)
     const auth = isAuthenticated(context);
-    const {count} = await get(`/restaurants/${id}/reviews/count`).data
+    const {count} = (await get(`/restaurants/${id}/reviews/count`)).data
 
     const {category, img_url} = restaurant_data
 
