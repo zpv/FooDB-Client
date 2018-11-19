@@ -1,5 +1,6 @@
 import { Component } from 'react'
-import { deleteUser } from '../../services/userApi' // todo: change this to deleteUser
+import { deleteDriver } from '../../services/userApi' // todo: change this to deleteUser
+import { get } from '../../lib/request'
 import Layout from '../../components/MyLayout.js' // todo: not sure if I need a Layout
 import { Form, Button, Message } from 'semantic-ui-react'
 import { getJwt, redirectUnauthenticated, signOut } from '../../lib/auth'
@@ -12,11 +13,10 @@ class Delete extends Component {
     }
 
     static async getInitialProps(context) {
-        if (redirectUnauthenticated('/user/register', context)) {
-          return {}
-        }
+        const { id } = context.query
+        const data = (await get(`/drivers/${id}`)).data
         const jwt = getJwt(context)
-        return { jwt }
+        return { jwt, data}
       }
   
 
@@ -30,13 +30,8 @@ class Delete extends Component {
                 error: "Please complete all the fields."
             });
         } else {
-<<<<<<< HEAD
-            const error = await deregisterUser(email) 
-            if (error) {
-=======
-            const data = await deleteUser(password, this.props.jwt) 
+            const data = await deleteDriver(this.props.data.email, this.props.jwt) 
             if (data.error) {
->>>>>>> a1135970145f4fa917eae0123575afd46c56e99b
                 this.setState({
                     error: data.error
                 });

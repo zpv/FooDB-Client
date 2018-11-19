@@ -46,12 +46,7 @@ class EditDriver extends Component {
                     error: data.error
                 });
             } else {
-                Router.push(`/user`)
-            }
-            if (error2) {
-                this.setState({
-                    error2
-                });
+                Router.push(`/driver?id=${this.props.id}`)
             }
         }
     }
