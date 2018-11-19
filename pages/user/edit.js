@@ -1,8 +1,9 @@
 import { Component } from 'react'
-import { signUp } from '../../lib/auth'
+import { editUser } from '../../services/userApi'
 import { get } from '../../lib/request'
 import { Form, Button, Message } from 'semantic-ui-react'
 import { getJwt, isAuthenticated, redirectUnauthenticated } from '../../lib/auth'
+import Router from 'next/router'
 
 import Layout from '../../components/MyLayout.js'
 
@@ -18,9 +19,9 @@ class EditUser extends Component {
       if (redirectUnauthenticated('/user/register', context)) {
         return {}
       }
-
-      const { data } = await get('/users', getJwt(context))
-      return data
+      const jwt = getJwt(context)
+      const { data } = await get('/users', jwt)
+      return { data, jwt }
     }
 
     handleSubmit = async event => {
@@ -40,11 +41,14 @@ class EditUser extends Component {
                 error: "Passwords do not match."
             });
         } else {
-            const error = await signUp(name, email, password, phone, address)
-            if (error) {
+            console.log("HUH")
+            const data = await editUser(name, email, password, phone, address, this.props.jwt)
+            if (data.error) {
                 this.setState({
-                    error
+                    error: data.error
                 });
+            } else {
+                Router.push(`/user`)
             }
         }
     }
@@ -59,27 +63,27 @@ class EditUser extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Field>
                     <label>Full Name</label>
-                    <input type="text" value={this.props.name} placeholder="Name" name="name" />
+                    <input type="text" defaultValue={this.props.data.name} placeholder="Name" name="name" />
                     </Form.Field>
                     <Form.Field>
                     <label>Email</label>
-                    <input type="email" value={this.props.email} placeholder="Email" name="email" />
+                    <input type="email" defaultValue={this.props.data.email} placeholder="Email" name="email" />
                     </Form.Field>
                     <Form.Field>
                     <label>Phone Number</label>
-                    <input type="tel" value={this.props.phone_num} placeholder="Phone Number" name="phone" pattern="^\d{10}$"/>
+                    <input type="tel" defaultValue={this.props.data.phone_num} placeholder="Phone Number" name="phone" pattern="^\d{10}$"/>
                     </Form.Field>
                     <Form.Field>
                     <label>Address</label>
-                    <input value={this.props.address} type="text" placeholder="Address" name="address"/>
+                    <input defaultValue={this.props.data.address} type="text" placeholder="Address" name="address"/>
                     </Form.Field>
                     <Form.Field>
                     <label>Password</label>
-                    <input type="text" placeholder="Enter Your Password" name="password"/>
+                    <input type="password" placeholder="Enter Your Password" name="password"/>
                     </Form.Field>
                     <Form.Field>
                     <label>Password Confirmation</label>
-                    <input type="text" placeholder="Re-enter Your Password" name="password_confirmation"/>
+                    <input type="password" placeholder="Re-enter Your Password" name="password_confirmation"/>
                     </Form.Field>
                     <Button type="submit">Submit</Button>
                 </Form>
