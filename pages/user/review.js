@@ -18,7 +18,7 @@ const slugify = (str) => (
 class Review extends Component {
     static async getInitialProps(context) {
         const { rid } = context.query
-        const { data } = await get(`/restaurants/${rid}`)
+        const { data } = await get(`/restaurants/${rid}/rest-reviews`)
         const jwt = getJwt(context)
       
         return { data, rid, jwt }
