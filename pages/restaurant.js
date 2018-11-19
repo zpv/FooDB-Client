@@ -8,7 +8,8 @@ import { Grid, Card, Icon, Image } from 'semantic-ui-react'
 import NProgress from 'nprogress'
 
 const imageStyle = {
-    maxHeight: '150px',
+    height: '150px',
+    weight: '100%',
     objectFit: 'cover'
 }
 
@@ -31,6 +32,7 @@ const Restaurant = (props) =>  {
     }
     const Content = (props) => (
         <Card name={props.food.name} price={props.food.price} onClick={addToCart}>
+        <Image src={props.food.img_url} style={imageStyle} />
         <Card.Content>
             <Card.Header>{props.food.name}</Card.Header>
             <Card.Meta>{props.food.price}</Card.Meta>

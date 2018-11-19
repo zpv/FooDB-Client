@@ -6,7 +6,8 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 import { getCookieFromBrowser } from "../lib/session"
 
 const imageStyle = {
-    maxHeight: '150px',
+    height: '150px',
+    weight: '100%',
     objectFit: 'cover'
 }
 
