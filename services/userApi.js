@@ -115,7 +115,7 @@ export const deleteDriver = async (
   try {
     const {data} = await delete("/drivers/delete", {
       email
-    }, jwt);
+    });
     return data;
   } catch (error) {
     if (error.response.status == 401)

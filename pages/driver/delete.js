@@ -30,13 +30,13 @@ class Delete extends Component {
                 error: "Please complete all the fields."
             });
         } else {
-            const data = await deleteDriver(this.props.data.email, this.props.jwt) 
-            if (data.error) {
+            try {
+                 await deleteDriver(this.props.data.email, this.props.jwt) 
+                 Router.push(`/`)
+            } catch (e) {
                 this.setState({
-                    error: data.error
+                    error: "Something went wrong."
                 });
-            } else {
-                signOut()
             }
         }
     }
